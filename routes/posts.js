@@ -35,8 +35,31 @@ router.post('/', async(req, res, next) =>  {
         error: error.message
     });
   }
-})
+});
 
+router.get('/:id', async(req, res, next) =>  {
+    try {
+        const id = req.params.id;
+        const posts = await Post.findById(id);
+
+        if(posts !== null) {
+          res.status(200).send({
+            status: 'success',
+            data: posts
+          });
+        } else {
+          res.status(400).send({
+            status: 'fail',
+            message: "id 不存在"
+          });
+        }
+    } catch (err) {
+      res.status(400).send({
+        status: 'fail',
+        message: err.message
+      });
+    }
+});
 
 module.exports = router;
 
