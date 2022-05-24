@@ -24,7 +24,7 @@ const postSchema = new mongoose.Schema(
     },
     likes: Number,
     comments: Number,
-  }
+  },{versionKey: false}
 );
 
 const Post = mongoose.model('Post', postSchema);

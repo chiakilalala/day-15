@@ -9,23 +9,19 @@ router.post('/', async(req, res, next) =>  {
       
       // 驗證是否有 content 欄位 -> 若有則使用 mongoose 語法新增資料 -> 回傳成功回應
       //                       -> 未填寫 content 欄位 -> 回傳失敗回應
+      
+      const { content ,name,image,tags,type}= req.body;
       const data = req.body;
-      if (data.content !==undefined ){ 
+      if (content !==undefined ){ 
        
-         const newPost = await Post.create({
-                name:data.name,
-                image:data.image,
-                content:data.content,
-                type:data.type,
-                tags:data.tags
-         });
-         res.status(200).json({
+         const newPost = await Post.create(data);
+         res.status(200).send({
           'status':'success',
           data:newPost
          })
 
-      }else{
-        res.status(404).json({
+      }else{ //  -> 未填寫 content 欄位 -> 回傳失敗回應
+        res.status(404).send({
           'status':false,
            error:'貼文內容必填'
          })
